@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{headFragment :: head('Criar veterinario')}"></head>
+<body>
+	<nav th:replace="~{menuFragment :: nav()}"></nav>
+	<div class="container mt-5">
+	<h2 class="text-center">Cadastrar Veterinaio</h2>
+		<form class="mt-12" id='form' th:object="${veterinario}"
+			action="javascript:void(0);">
+		<div class="row">
+				<div class="col-md-6">
+					<div class="input-group mb-3 input-group-sm">
+						<span class="input-group-text">Nome</span> <input
+							type="text" th:field="*{nome}" class="form-control"
+							value="nome">
+					</div>
+				</div>
+
+				<div class="col-md-6">
+					<div class="input-group mb-3 input-group-sm">
+						<span class="input-group-text">CRV</span> <input type="text"
+							placeholder="Regra para CRV: 9999/XX"
+							th:field="*{CRV}" class="form-control"
+							value="CRV">
+					</div>
+				</div>
+			</div>
+		<input type="submit" value="Salvar" />
+	</form>
+	</div>
+	
+</body>
+<script>
+	
+		function validar() {
+			const patternMatricula = /^[A-Z]{3}-\d{4}-[A-Z]\d[A-Z]$/;
+			const matriculaPrimeiroComandante = document.getElementById("matriculaPrimeiroComandante")
+			
+			if(!patternMatricula.test(matriculaPrimeiroComandante.value)) {
+				alert("Favor preencher a matrícula corretamente")
+				matriculaPrimeiroComandante.focus()
+				return true
+			}
+			
+			return false
+		}
+		
+		let responseEntity;
+		
+		function salvar() {
+			if (validar())
+				return;
+
+			const form = document.getElementById('form');
+			const formData = new FormData(form); // create FormData object
+			const jsonBody = JSON.stringify(Object.fromEntries(formData.entries()));
+			var myHeaders = new Headers();
+			myHeaders.append("Content-Type", "application/json");
+
+			var requestOptions = {
+				method: 'POST',
+				headers: myHeaders,
+				body: jsonBody,
+				redirect: 'follow'
+			};
+
+			fetch("/viagem/create", requestOptions)
+				.then(response => {
+					responseEntity = response
+					return response.json()
+				})
+				.then(result => tratarRedirect(result, responseEntity))
+				.catch(error => console.log('error', error));
+		}
+		
+		async function tratarRedirect(data, response) {
+			if (response.ok) {
+				alert('Criado com sucesso')
+					
+				await new Promise(r => setTimeout(r, 2000));
+				window.location.href = "/viagem";
+				return;
+			}
+			let erros = document.getElementById('erros');
+			erros.innerHTML = '';
+			let itemList = '';
+
+			/*if (data.hasOwnProperty('nome'))
+				itemList = `<li class="text-danger">${data.nome}</li>`;
+
+			if (data.hasOwnProperty('idCategoria'))
+				itemList += `<li class="text-danger">${data.idCategoria}</li>`;*/
+
+			erros.innerHTML = itemList;
+		}
+		
+	</script>
+</html>

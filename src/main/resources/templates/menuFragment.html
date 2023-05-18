@@ -1,0 +1,29 @@
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark" th:fragment="nav()">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="/produto">Fiap</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="mynavbar">
+				<ul class="navbar-nav me-auto">
+					<li class="nav-item">
+						<a class="nav-link" href="/veterinario">Veterinario</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/animais">Animais</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/tutor">Tutor</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/agendamento">Agendamento</a>
+					</li>
+				</ul>
+				<form class="d-flex">
+					<div style="float: right;">
+						<p class="text-white" th:text="${nome}"></p>
+					</div>
+				</form>
+			</div>
+		</div>
+	</nav>

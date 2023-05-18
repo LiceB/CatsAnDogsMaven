@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{headFragment :: head('Listar veterinarios')}"></head>
+
+<body>
+	<nav th:replace="~{menuFragment :: nav()}"></nav>
+	
+	<div class="container-fluid">
+		<h3 class="text-left fs-2 text-center">Lista de veterinarios</h3>
+		<hr>
+		<a type="button" class="btn btn-info mt-2" href="veterinario/create"> Criar</a>
+		<hr>
+		<table id="tbviagem" class="table table-success table-bordered table-lg mt-4">
+			<thead>
+				<th>Id</th>
+				<th>Nome</th>
+				<th>CRV</th>
+				<th>Especialidade</th>
+				<th>Disponibilidade</th>
+				<th>Editar</th>
+				<th>Deletar</th>
+			</thead>
+			<tbody>
+				<tr th:each="veterinario : ${veterinarios}">
+					<td th:text="${veterinario.getId()}"></td>
+					<td th:text="${veterinario.getNome()}"></td>
+					<td th:text="${veterinario.getCRV()}"></td>
+					<td th:text="${veterinario.getEspecialidade()}"></td>
+					<td th:text="${veterinario.getDisponibilidade()}"></td>
+					<td><a th:href="@{/veterinario/edit/{veterinarioId} (veterinarioId = ${veterinario.id})}">Editar</a></td>
+					<td><a th:href="@{/categoria/delete/{categoriaId} (categoriaId = ${categoria.id})}">Deletar</a></td>
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+</body>
