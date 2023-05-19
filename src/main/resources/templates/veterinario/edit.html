@@ -1,23 +1,24 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{headFragment :: head('Criar veterinario')}"><meta charset="UTF-8"></head>
+<head th:replace="~{headFragment :: head('Editar veterinario')}"><meta charset="UTF-8"></head>
 <body>
 	<nav th:replace="~{menuFragment :: nav()}"></nav>
 	<div class="container mt-5">
-		<h2 class="text-center">Cadastrar Veterinario</h2>
-		<form method="post" class="mt-12" th:object="${veterinario}" id='frmVeterinario'
-			action="/veterinario/create">
+		<h2 class="text-center">Editar Veterinario</h2>
+		<form method="put" class="mt-12" th:object="${veterinario}" id='frmVeterinario'
+			action="/veterinario/edit/{id}">
+			<input type="hidden" name="id" th:value="${veterinario.id}" />
 			<div class="row">
 				<div class="col-md-6">
 					<div class="input-group mb-3 input-group-sm">
 						<span class="input-group-text">Nome</span> <input type="text"
-							class="form-control" name="nome" id="nome" placeholder="Alice Bianchi" />
+							class="form-control" th:value="${veterinario.nome}" name="nome" id="nome" placeholder="Alice Bianchi" />
 					</div>
 				</div>
 				<div class="col-md-6">
 					<div class="input-group mb-3 input-group-sm">
 						<span class="input-group-text">CRV</span> <input type="text"
-							class="form-control" name="crv" id="crv" placeholder="2697/SP" />
+							class="form-control" th:value="${veterinario.CRV}" name="crv" id="crv" placeholder="2697/SP" />
 					</div>
 				</div>
 			</div>
@@ -25,13 +26,13 @@
 				<div class="col-md-6">
 					<div class="input-group mb-3 input-group-sm">
 						<span class="input-group-text">Especialidade</span> <input type="text"
-							class="form-control" name="especialidade" id="especialidade" placeholder="Cardiologia" />
+							class="form-control" th:value="${veterinario.especialidade}" name="especialidade" id="especialidade" placeholder="Cardiologia" />
 					</div>
 				</div>
 				<div class="col-md-6">
 					<div class="input-group mb-3 input-group-sm">
 						<span class="input-group-text">Disponibilidade</span> <input type="text"
-							class="form-control" name="disponibilidade" id="disponibilidade" placeholder="Segunda a Sexta, das 09:00 as 18:00" />
+							class="form-control" th:value="${veterinario.disponibilidade}" name="disponibilidade" id="disponibilidade" placeholder="Segunda a Sexta, das 09:00 as 18:00" />
 					</div>
 				</div>
 			</div>
@@ -39,7 +40,7 @@
 				<div class="col-md-6">
 					<div class="input-group mb-3 input-group-sm">
 						<span class="input-group-text">Duração</span> <input type="text"
-							class="form-control" name="duracao" id="duracao" placeholder="45 minutos" />
+							class="form-control" th:value="${veterinario.duracao}" name="duracao" id="duracao" placeholder="45 minutos" />
 					</div>
 				</div>
 			</div>
@@ -93,7 +94,7 @@
 	
 	async function tratarRedirect(data, response) {
 		if (response.ok) {
-			alert('Criado com sucesso')
+			alert('Editado com sucesso')
 				
 			await new Promise(r => setTimeout(r, 2000));
 			window.location.href = "/veterinario";

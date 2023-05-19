@@ -1,6 +1,7 @@
 package com.example.check3.controllers;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,24 +40,28 @@ public class VeterinarioController {
 	}
 	
 	@GetMapping("/edit/{id}")
-	public String getById(Model model, @PathVariable("id")Long idVeterinario) {
-		Veterinario veterinario = veterinarioRepository.findById(idVeterinario).orElse(null);
-		model.addAttribute("idVeterinario", idVeterinario);
-		return "veterinario/edit";
+	public String edit(Model model, @PathVariable("id")Long idVeterinario) {
+		Optional<Veterinario> selecionado = veterinarioRepository.findById(idVeterinario);
+		if(selecionado.isPresent()) {
+			Veterinario veterinario = selecionado.get();
+			model.addAttribute("veterinario", veterinario);
+			return "veterinario/edit";
+		} else {
+			return "retirect:/veterinario";
+		}
 	}
 	
 	@PutMapping("/edit/{id}")
-	public ResponseEntity<Veterinario> atualizarViagem(@PathVariable Long id, @Valid @RequestBody Veterinario veterinarioAtualizado) {
-		Veterinario veterinario = veterinarioRepository.findById(id).orElse(null);
+	public ResponseEntity<Veterinario> edit(@Valid @RequestBody Veterinario objVeterinario) {
+		objVeterinario.setNome(objVeterinario.getNome());
+		objVeterinario.setCRV(objVeterinario.getCRV());
+		objVeterinario.setDisponibilidade(objVeterinario.getDisponibilidade());
+		objVeterinario.setEspecialidade(objVeterinario.getEspecialidade());
+		objVeterinario.setDuracao(objVeterinario.getDuracao());
+		
+		veterinarioRepository.save(objVeterinario);
 
-		veterinario.setNome(veterinarioAtualizado.getNome());
-		veterinario.setCRV(veterinarioAtualizado.getCRV());
-		veterinario.setEspecialidade(veterinarioAtualizado.getEspecialidade());
-		veterinario.setDisponibilidade(veterinarioAtualizado.getDisponibilidade());
-
-		final Veterinario veterinarioAtualizadaBD = veterinarioRepository.save(veterinario);
-
-		return ResponseEntity.ok(veterinarioAtualizadaBD);
+		return new ResponseEntity<Veterinario>(objVeterinario, HttpStatus.OK);
 	}
 	
 	@PostMapping("/edit/{id}")
