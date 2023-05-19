@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{headFragment :: head('Listar tutor')}"><meta charset="UTF-8"></head>
+
+<body>
+	<nav th:replace="~{menuFragment :: nav()}"></nav>
+	
+	<div class="container-fluid">
+		<h3 class="text-left fs-2 text-center">Lista de tutor</h3>
+		<hr>
+		<a type="button" class="btn btn-info mt-2" href="tutor/create"> Criar</a>
+		<hr>
+		<table id="tbtutor" class="table table-success table-bordered table-lg mt-4">
+			<thead>
+				<th>Id</th>
+				<th>Nome</th>
+				<th>Telefone</th>
+				<th>Celular</th>
+				<th>Logradouro</th>
+				<th>Número</th>
+				<th>Complemento</th>
+				<th>Bairro</th>
+				<th>Cidade</th>
+				<th>Estado</th>
+				<th>Editar</th>
+				<th>Deletar</th>
+			</thead>
+			<tbody>
+				<tr th:each="tutor : ${tutores}">
+					<td th:text="${tutor.getId()}"></td>
+					<td th:text="${tutor.getNome()}"></td>
+					<td th:text="${tutor.getTelefone()}"></td>
+					<td th:text="${tutor.getCelular()}"></td>
+					<td th:text="${tutor.getLogradouro()}"></td>
+					<td th:text="${tutor.getNumero()}"></td>
+					<td th:text="${tutor.getComplemento()}"></td>
+					<td th:text="${tutor.getBairro()}"></td>
+					<td th:text="${tutor.getCidade()}"></td>
+					<td th:text="${tutor.getEstado()}"></td>
+					<td><a th:href="@{/tutor/edit/{tutorId} (tutorId = ${tutor.id})}">Editar</a></td>
+					<td><a th:href="@{/tutor/delete/{tutorId} (tutorId = ${tutor.id})}">Deletar</a></td>
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+</body>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{headFragment :: head('Listar agendamento')}"><meta charset="UTF-8"></head>
+
+<body>
+	<nav th:replace="~{menuFragment :: nav()}"></nav>
+	
+	<div class="container-fluid">
+		<h3 class="text-left fs-2 text-center">Lista de agendamento</h3>
+		<hr>
+		<a type="button" class="btn btn-info mt-2" href="agendamento/create"> Criar</a>
+		<hr>
+		<table id="tbagendamento" class="table table-success table-bordered table-lg mt-4">
+			<thead>
+				<th>Id</th>
+				<th>Animal</th>
+				<th>Tutor</th>
+				<th>Veterinario</th>
+				<th>Especialidade</th>
+				<th>Duração</th>
+				<th>Editar</th>
+				<th>Deletar</th>
+			</thead>
+			<tbody>
+				<tr th:each="agendamento : ${agendamentos}">
+					<td th:text="${agendamento.getId()}"></td>
+					<td th:text="${agendamento.getAnimal}"></td>
+					<td th:text="${agendamento.getTutor()}"></td>
+					<td th:text="${agendamento.getVeterinario()}"></td>
+					<td th:text="${agendamento.getEspecialidade()}"></td>
+					<td th:text="${agendamento.getDuracao()}"></td>
+					<td><a th:href="@{/agendamento/edit/{agendamentoId} (agendamentoId = ${agendamento.id})}">Editar</a></td>
+					<td><a th:href="@{/agendamento/delete/{agendamentoId} (agendamentoId = ${agendamento.id})}">Deletar</a></td>
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+</body>

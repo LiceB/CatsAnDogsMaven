@@ -15,20 +15,25 @@ public class Agendamento {
 	@GeneratedValue(strategy = GenerationType.AUTO) // auto increment
 	private Long id;
 
-	@NotNull(message = "O animal é obrigatório")
-	@Min(value = 1, message = "Favor selecionar o animal")
-	private Long idAnimal;
+	@NotNull
+	@NotBlank
+	private String animal;
 
-	@NotNull(message = "O tutor é obrigatório")
-	@Min(value = 1, message = "Favor selecionar o tutor")
-	private Long idTutor;
+	@NotNull
+	@NotBlank
+	private String tutor;
 
-	@NotNull(message = "O Veterinario é obrigatório")
-	@Min(value = 1, message = "Favor selecionar o veterinario")
-	private Long idVeterinario;
+	@NotNull
+	@NotBlank
+	private String veterinario;
 
+	@NotNull
 	@NotBlank
 	private String especialidade;
+
+	@NotNull
+	@NotBlank
+	private String duracao;
 
 	public Long getId() {
 		return id;
@@ -38,28 +43,28 @@ public class Agendamento {
 		this.id = id;
 	}
 
-	public Long getIdAnimal() {
-		return idAnimal;
+	public String getAnimal() {
+		return animal;
 	}
 
-	public void setIdAnimal(Long idAnimal) {
-		this.idAnimal = idAnimal;
+	public void setAnimal(String animal) {
+		this.animal = animal;
 	}
 
-	public Long getIdTutor() {
-		return idTutor;
+	public String getTutor() {
+		return tutor;
 	}
 
-	public void setIdTutor(Long idTutor) {
-		this.idTutor = idTutor;
+	public void setTutor(String tutor) {
+		this.tutor = tutor;
 	}
 
-	public Long getIdVeterinario() {
-		return idVeterinario;
+	public String getVeterinario() {
+		return veterinario;
 	}
 
-	public void setIdVeterinario(Long idVeterinario) {
-		this.idVeterinario = idVeterinario;
+	public void setVeterinario(String veterinario) {
+		this.veterinario = veterinario;
 	}
 
 	public String getEspecialidade() {
@@ -68,6 +73,14 @@ public class Agendamento {
 
 	public void setEspecialidade(String especialidade) {
 		this.especialidade = especialidade;
+	}
+
+	public String getDuracao() {
+		return duracao;
+	}
+
+	public void setDuracao(String duracao) {
+		this.duracao = duracao;
 	}
 
 }

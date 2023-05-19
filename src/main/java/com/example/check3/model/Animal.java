@@ -8,7 +8,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
-public class Animais {
+public class Animal {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -67,7 +67,7 @@ public class Animais {
 		this.idade = idade;
 	}
 	
-	public void fromAnimais(Animais animais) {
+	public void fromAnimais(Animal animais) {
 		this.nome = animais.getNome();
 		this.raca = animais.getRaca();
 		this.especie = animais.getEspecie();

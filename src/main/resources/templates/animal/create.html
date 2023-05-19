@@ -1,75 +1,55 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{headFragment :: head('Criar veterinario')}"><meta charset="UTF-8"></head>
+<head th:replace="~{headFragment :: head('Criar animal')}"><meta charset="UTF-8"></head>
 <body>
 	<nav th:replace="~{menuFragment :: nav()}"></nav>
 	<div class="container mt-5">
-		<h2 class="text-center">Cadastrar Veterinaio</h2>
-		<form method="post" class="mt-12" th:object="${veterinario}" id='frmVeterinario'
-			action="/veterinario/create">
+		<h2 class="text-center">Cadastrar Animal</h2>
+		<form method="post" class="mt-12" th:object="${animal}" id='frmAnimal'
+			action="/animal/create">
 			<div class="row">
 				<div class="col-md-6">
 					<div class="input-group mb-3 input-group-sm">
 						<span class="input-group-text">Nome</span> <input type="text"
-							class="form-control" name="nome" id="nome" placeholder="Alice Bianchi" />
+							class="form-control" name="nome" id="nome" placeholder="Totó" />
 					</div>
 				</div>
 				<div class="col-md-6">
 					<div class="input-group mb-3 input-group-sm">
-						<span class="input-group-text">CRV</span> <input type="text"
-							class="form-control" name="crv" id="crv" placeholder="2697/SP" />
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-6">
-					<div class="input-group mb-3 input-group-sm">
-						<span class="input-group-text">Especialidade</span> <input type="text"
-							class="form-control" name="especialidade" id="especialidade" placeholder="Cardiologia" />
-					</div>
-				</div>
-				<div class="col-md-6">
-					<div class="input-group mb-3 input-group-sm">
-						<span class="input-group-text">Disponibilidade</span> <input type="text"
-							class="form-control" name="disponibilidade" id="disponibilidade" placeholder="Segunda a Sexta, das 09:00 as 18:00" />
+						<span class="input-group-text">Raça</span> <input type="text"
+							class="form-control" name="raca" id="raca" placeholder="Bulldog" />
 					</div>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-6">
 					<div class="input-group mb-3 input-group-sm">
-						<span class="input-group-text">Duração</span> <input type="text"
-							class="form-control" name="duracao" id="duracao" placeholder="45 minutos" />
+						<span class="input-group-text">Especie</span> <input type="text"
+							class="form-control" name="especie" id="especie" placeholder="Cachorro" />
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="input-group mb-3 input-group-sm">
+						<span class="input-group-text">Idade</span> <input type="number"
+							class="form-control" name="idade" id="idade" placeholder="7" />
 					</div>
 				</div>
 			</div>
 			<input class="btn btn-success" type="button"
-				value="Salvar Veterinario" onclick="salvar();" />
+				value="Salvar Animal" onclick="salvar();" />
 		</form>
 	</div>
 
 </body>
 <script>
-	function validar() {
-		const patternCRV = /\d{4}\/[A-Z]{2}/;
-		const CRVVeterinario = document.getElementById("crv")
-		
-		if(!patternCRV.test(CRVVeterinario.value)) {
-			alert("Favor preencher o CRV corretamente")
-			CRVVeterinario.focus()
-			return true
-		}
-		
-		return false
-	}
 	
 	let responseEntity;
 	
 	function salvar() {
-		if (validar())
-			return;
+		/*if (validar())
+			return;*/
 
-		const form = document.getElementById('frmVeterinario');
+		const form = document.getElementById('frmAnimal');
 		const formData = new FormData(form); // create FormData object
 		const jsonBody = JSON.stringify(Object.fromEntries(formData.entries()));
 		var myHeaders = new Headers();
@@ -82,7 +62,7 @@
 			redirect: 'follow'
 		};
 
-		fetch("/veterinario/create", requestOptions)
+		fetch("/animal/create", requestOptions)
 			.then(response => {
 				responseEntity = response
 				return response.json()
@@ -96,7 +76,7 @@
 			alert('Criado com sucesso')
 				
 			await new Promise(r => setTimeout(r, 2000));
-			window.location.href = "/veterinario";
+			window.location.href = "/animal";
 			return;
 		}
 		let erros = document.getElementById('erros');

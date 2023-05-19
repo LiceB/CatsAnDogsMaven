@@ -18,11 +18,12 @@ public class Veterinario {
 	@NotBlank
 	private String nome;
 
-	@Pattern(regexp = "\\d{4}/[A-Z]{2}", message = "CRV fora do padrão 0000/SP")
+	@Pattern(regexp = "\\d{4}/[A-Z]{2}", message = "CRV fora do padrão 0000/XX")
 	private String CRV;
 
 	private String especialidade;
 	private String disponibilidade;
+	private String duracao;
 
 	public Long getId() {
 		return id;
@@ -62,6 +63,14 @@ public class Veterinario {
 
 	public void setDisponibilidade(String disponibilidade) {
 		this.disponibilidade = disponibilidade;
+	}
+
+	public String getDuracao() {
+		return duracao;
+	}
+
+	public void setDuracao(String duracao) {
+		this.duracao = duracao;
 	}
 
 }

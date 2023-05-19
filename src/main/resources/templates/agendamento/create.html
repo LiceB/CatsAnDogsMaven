@@ -1,37 +1,40 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{headFragment :: head('Criar veterinario')}"><meta charset="UTF-8"></head>
+<head th:replace="~{headFragment :: head('Criar agendamento')}"><meta charset="UTF-8"></head>
 <body>
 	<nav th:replace="~{menuFragment :: nav()}"></nav>
+	<ul id="erros">
+	
+	</ul>
 	<div class="container mt-5">
-		<h2 class="text-center">Cadastrar Veterinaio</h2>
-		<form method="post" class="mt-12" th:object="${veterinario}" id='frmVeterinario'
-			action="/veterinario/create">
+		<h2 class="text-center">Cadastrar Agendamento</h2>
+		<form method="post" class="mt-12" th:object="${agendamento}" id='frmAgendamento'
+			action="/agendamento/create">
 			<div class="row">
 				<div class="col-md-6">
 					<div class="input-group mb-3 input-group-sm">
-						<span class="input-group-text">Nome</span> <input type="text"
-							class="form-control" name="nome" id="nome" placeholder="Alice Bianchi" />
+						<span class="input-group-text">Animal</span> <input type="text"
+							class="form-control" name="animal" id="animal" placeholder="Hercules" />
 					</div>
 				</div>
 				<div class="col-md-6">
 					<div class="input-group mb-3 input-group-sm">
-						<span class="input-group-text">CRV</span> <input type="text"
-							class="form-control" name="crv" id="crv" placeholder="2697/SP" />
+						<span class="input-group-text">Tutor</span> <input type="text"
+							class="form-control" name="tutor" id="tutor" placeholder="Guilherme" />
 					</div>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-6">
 					<div class="input-group mb-3 input-group-sm">
-						<span class="input-group-text">Especialidade</span> <input type="text"
-							class="form-control" name="especialidade" id="especialidade" placeholder="Cardiologia" />
+						<span class="input-group-text">Veterinario</span> <input type="text"
+							class="form-control" name="veterinario" id="veterinario" placeholder="Dra Ana" />
 					</div>
 				</div>
 				<div class="col-md-6">
 					<div class="input-group mb-3 input-group-sm">
-						<span class="input-group-text">Disponibilidade</span> <input type="text"
-							class="form-control" name="disponibilidade" id="disponibilidade" placeholder="Segunda a Sexta, das 09:00 as 18:00" />
+						<span class="input-group-text">Especialidade</span> <input type="text"
+							class="form-control" name="especialidade" id="especialidade" placeholder="Cardiologia" />
 					</div>
 				</div>
 			</div>
@@ -44,32 +47,18 @@
 				</div>
 			</div>
 			<input class="btn btn-success" type="button"
-				value="Salvar Veterinario" onclick="salvar();" />
+				value="Salvar Agendamento" onclick="salvar();" />
 		</form>
 	</div>
 
 </body>
 <script>
-	function validar() {
-		const patternCRV = /\d{4}\/[A-Z]{2}/;
-		const CRVVeterinario = document.getElementById("crv")
-		
-		if(!patternCRV.test(CRVVeterinario.value)) {
-			alert("Favor preencher o CRV corretamente")
-			CRVVeterinario.focus()
-			return true
-		}
-		
-		return false
-	}
 	
 	let responseEntity;
 	
 	function salvar() {
-		if (validar())
-			return;
 
-		const form = document.getElementById('frmVeterinario');
+		const form = document.getElementById('frmAgendamento');
 		const formData = new FormData(form); // create FormData object
 		const jsonBody = JSON.stringify(Object.fromEntries(formData.entries()));
 		var myHeaders = new Headers();
@@ -82,7 +71,7 @@
 			redirect: 'follow'
 		};
 
-		fetch("/veterinario/create", requestOptions)
+		fetch("/agendamento/create", requestOptions)
 			.then(response => {
 				responseEntity = response
 				return response.json()
@@ -96,18 +85,18 @@
 			alert('Criado com sucesso')
 				
 			await new Promise(r => setTimeout(r, 2000));
-			window.location.href = "/veterinario";
+			window.location.href = "/agendamento";
 			return;
 		}
 		let erros = document.getElementById('erros');
 		erros.innerHTML = '';
 		let itemList = '';
 
-		/*if (data.hasOwnProperty('nome'))
+		if (data.hasOwnProperty('nome'))
 			itemList = `<li class="text-danger">${data.nome}</li>`;
 
-		if (data.hasOwnProperty('idCategoria'))
-			itemList += `<li class="text-danger">${data.idCategoria}</li>`;*/
+		if (data.hasOwnProperty('idAnimal'))
+			itemList += `<li class="text-danger">${data.idAnimal}</li>`;
 
 		erros.innerHTML = itemList;
 	}

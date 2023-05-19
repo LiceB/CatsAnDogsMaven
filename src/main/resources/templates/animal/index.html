@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{headFragment :: head('Listar animais')}"></head>
+
+<body>
+	<nav th:replace="~{menuFragment :: nav()}"></nav>
+	
+	<div class="container-fluid">
+		<h3 class="text-left fs-2 text-center">Lista de animais</h3>
+		<hr>
+		<a type="button" class="btn btn-info mt-2" href="animal/create"> Criar</a>
+		<hr>
+		<table id="tbviagem" class="table table-success table-bordered table-lg mt-4">
+			<thead>
+				<th>Id</th>
+				<th>Nome</th>
+				<th>Raca</th>
+				<th>Especie</th>
+				<th>Idade</th>
+				<th>Editar</th>
+				<th>Deletar</th>
+			</thead>
+			<tbody>
+				<tr th:each="animal : ${animais}">
+					<td th:text="${animal.getId()}"></td>
+					<td th:text="${animal.getNome()}"></td>
+					<td th:text="${animal.getRaca()}"></td>
+					<td th:text="${animal.getEspecie()}"></td>
+					<td th:text="${animal.getIdade()}"></td>
+					<td><a th:href="@{/animal/edit/{animalId} (animalId = ${animal.id})}">Editar</a></td>
+					<td><a th:href="@{/animal/delete/{animalId} (animalId = ${animal.id})}">Deletar</a></td>
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+</body>
