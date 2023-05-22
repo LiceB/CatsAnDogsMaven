@@ -34,6 +34,16 @@ public class AgendamentoController {
 	@Autowired
 	private AgendamentoRepository agendamentoRepository;
 	
+	@Autowired
+	private AnimalRepository animalRepository;
+	
+	@Autowired
+	private TutorRepository tutorRepository;
+	
+	@Autowired
+	private VeterinarioRepository veterinarioRepository;
+	
+	
 	@GetMapping("")
 	public ModelAndView get() {
 		ModelAndView model = new ModelAndView("agendamento/index");
@@ -55,27 +65,39 @@ public class AgendamentoController {
 		}
 	}
 	
-	@PostMapping("/edit/{id}")
-	public String edit(@PathVariable("id") Long id, @ModelAttribute("agendamento") Agendamento objAgendamento, Model model) {
-		Agendamento agendamento = agendamentoRepository.findById(id).orElse(null);
-		
-		agendamento.setAnimal(objAgendamento.getAnimal());
-		agendamento.setTutor(objAgendamento.getTutor());
-		agendamento.setVeterinario(objAgendamento.getVeterinario());
-		agendamento.setEspecialidade(objAgendamento.getEspecialidade());
-		agendamento.setDuracao(objAgendamento.getDuracao());
-		
-		agendamentoRepository.save(agendamento);
-		
-		model.addAttribute("agendamento", agendamento);
-		
-		return "redirect:/";
-	}
+//	@PostMapping("/edit/{id}")
+//	public String edit(@PathVariable("id") Long id, @ModelAttribute("agendamento") Agendamento objAgendamento, Model model) {
+//		Agendamento agendamento = agendamentoRepository.findById(id).orElse(null);
+//		
+//		agendamento.setAnimal(objAgendamento.getAnimal());
+//		agendamento.setTutor(objAgendamento.getTutor());
+//		agendamento.setVeterinario(objAgendamento.getVeterinario());
+//		agendamento.setEspecialidade(objAgendamento.getEspecialidade());
+//		agendamento.setDuracao(objAgendamento.getDuracao());
+//		
+//		agendamentoRepository.save(agendamento);
+//		
+//		model.addAttribute("agendamento", agendamento);
+//		
+//		return "redirect:/";
+//	}
 	
 	@GetMapping("/create")
 	public ModelAndView create() {
-		ModelAndView model = new ModelAndView("agendamento/create");		
+		ModelAndView model = new ModelAndView("agendamento/create");
+		List<Animal> animal = animalRepository.findAll();
+		List<Tutor> tutor = tutorRepository.findAll();
+		List<Veterinario> veterinario = veterinarioRepository.findAll();
+		
+		model.addObject("animal", animal);
+		model.addObject("tutor", tutor);
+		model.addObject("veterinario", veterinario);
 		return model;
+	}
+	
+	public ResponseEntity<Agendamento> createFrom(@Valid @RequestBody Agendamento objAgendamento) {
+		agendamentoRepository.save(objAgendamento);
+		return new ResponseEntity<Agendamento>(objAgendamento, HttpStatus.CREATED);
 	}
 	
 	@PostMapping("/create")
@@ -84,23 +106,6 @@ public class AgendamentoController {
 		
 		return new ResponseEntity<Agendamento>(agendamento, HttpStatus.CREATED);
 	}
-	
-//	@PostMapping("/edit/{id}")
-//	public ResponseEntity<Agendamento> edit(@PathVariable("id") Long id, @Valid @RequestBody Agendamento agendamento) {
-//	    Optional<Agendamento> optionalAgendamento = agendamentoRepository.findById(id);
-//	    if (optionalAgendamento.isPresent()) {
-//	        Agendamento existingAgendamento = optionalAgendamento.get();
-//	        existingAgendamento.setIdAnimal(agendamento.getIdAnimal());
-//	        existingAgendamento.setIdTutor(agendamento.getIdTutor());
-//	        existingAgendamento.setIdVeterinario(agendamento.getIdVeterinario());
-//	        existingAgendamento.setEspecialidade(agendamento.getEspecialidade());
-//	        
-//	        agendamentoRepository.save(existingAgendamento);
-//	        return new ResponseEntity<>(existingAgendamento, HttpStatus.OK);
-//	    } else {
-//	        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//	    }
-//	}
 	
 	@GetMapping("/delete/{id}")
 	public String delete(@PathVariable("id")Long id) {

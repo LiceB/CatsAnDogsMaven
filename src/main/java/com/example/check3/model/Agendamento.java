@@ -1,10 +1,12 @@
 package com.example.check3.model;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -34,6 +36,8 @@ public class Agendamento {
 	@NotNull
 	@NotBlank
 	private String duracao;
+
+	private LocalDateTime data;
 
 	public Long getId() {
 		return id;
@@ -81,6 +85,14 @@ public class Agendamento {
 
 	public void setDuracao(String duracao) {
 		this.duracao = duracao;
+	}
+
+	public String getData() {
+		return data.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
+	}
+
+	public void setData(LocalDateTime data) {
+		this.data = data;
 	}
 
 }

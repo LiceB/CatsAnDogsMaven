@@ -1,40 +1,46 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{headFragment :: head('Criar agendamento')}"><meta charset="UTF-8"></head>
+<head th:replace="~{headFragment :: head('Criar agendamento')}">
+<meta charset="UTF-8">
+</head>
 <body>
 	<nav th:replace="~{menuFragment :: nav()}"></nav>
 	<ul id="erros">
-	
+
 	</ul>
 	<div class="container mt-5">
 		<h2 class="text-center">Cadastrar Agendamento</h2>
-		<form method="post" class="mt-12" th:object="${agendamento}" id='frmAgendamento'
-			action="/agendamento/create">
+		<form method="post" class="mt-12" th:object="${agendamento}"
+			id='frmAgendamento' action="/agendamento/create">
 			<div class="row">
 				<div class="col-md-6">
 					<div class="input-group mb-3 input-group-sm">
 						<span class="input-group-text">Animal</span> <input type="text"
-							class="form-control" name="animal" id="animal" placeholder="Hercules" />
+							class="form-control" name="animal" id="animal"
+							placeholder="Hercules" />
 					</div>
 				</div>
 				<div class="col-md-6">
 					<div class="input-group mb-3 input-group-sm">
 						<span class="input-group-text">Tutor</span> <input type="text"
-							class="form-control" name="tutor" id="tutor" placeholder="Guilherme" />
+							class="form-control" name="tutor" id="tutor"
+							placeholder="Guilherme" />
 					</div>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-6">
 					<div class="input-group mb-3 input-group-sm">
-						<span class="input-group-text">Veterinario</span> <input type="text"
-							class="form-control" name="veterinario" id="veterinario" placeholder="Dra Ana" />
+						<span class="input-group-text">Veterinario</span> <input
+							type="text" class="form-control" name="veterinario"
+							id="veterinario" placeholder="Dra Ana" />
 					</div>
 				</div>
 				<div class="col-md-6">
 					<div class="input-group mb-3 input-group-sm">
-						<span class="input-group-text">Especialidade</span> <input type="text"
-							class="form-control" name="especialidade" id="especialidade" placeholder="Cardiologia" />
+						<span class="input-group-text">Especialidade</span> <input
+							type="text" class="form-control" name="especialidade"
+							id="especialidade" placeholder="Cardiologia" />
 					</div>
 				</div>
 			</div>
@@ -42,7 +48,15 @@
 				<div class="col-md-6">
 					<div class="input-group mb-3 input-group-sm">
 						<span class="input-group-text">Duração</span> <input type="text"
-							class="form-control" name="duracao" id="duracao" placeholder="45 minutos" />
+							class="form-control" name="duracao" id="duracao"
+							placeholder="45 minutos" />
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="input-group mb-3 input-group-sm">
+						<span class="input-group-text">Data</span> <input
+							type="datetime-local" class="form-control" name="data" id="data"
+							value="2023-05-21T19:30" />
 					</div>
 				</div>
 			</div>
@@ -50,7 +64,6 @@
 				value="Salvar Agendamento" onclick="salvar();" />
 		</form>
 	</div>
-
 </body>
 <script>
 	

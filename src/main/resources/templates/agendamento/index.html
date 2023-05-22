@@ -19,6 +19,7 @@
 				<th>Veterinario</th>
 				<th>Especialidade</th>
 				<th>Duração</th>
+				<th>Data</th>
 				<th>Editar</th>
 				<th>Deletar</th>
 			</thead>
@@ -30,6 +31,7 @@
 					<td th:text="${agendamento.getVeterinario()}"></td>
 					<td th:text="${agendamento.getEspecialidade()}"></td>
 					<td th:text="${agendamento.getDuracao()}"></td>
+					<td th:text="${agendamento.getData()}"></td>
 					<td><a th:href="@{/agendamento/edit/{agendamentoId} (agendamentoId = ${agendamento.id})}">Editar</a></td>
 					<td><a th:href="@{/agendamento/delete/{agendamentoId} (agendamentoId = ${agendamento.id})}">Deletar</a></td>
 				</tr>
