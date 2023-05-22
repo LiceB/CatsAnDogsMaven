@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,6 +41,35 @@ public class AgendamentoController {
 		
 		model.addObject("agendamentos", listaAgendamento);
 		return model;
+	}
+	
+	@GetMapping("edit/{id}")
+	public String edit(Model model, @PathVariable("id") Long idAgendamento) {
+		Optional<Agendamento> selecionado = agendamentoRepository.findById(idAgendamento);
+		if(selecionado.isPresent()) {
+			Agendamento agendamento = selecionado.get();
+			model.addAttribute("agendamento", agendamento);
+			return "agendamento/edit";
+		} else {
+			return "redirect:/agendamento";
+		}
+	}
+	
+	@PostMapping("/edit/{id}")
+	public String edit(@PathVariable("id") Long id, @ModelAttribute("agendamento") Agendamento objAgendamento, Model model) {
+		Agendamento agendamento = agendamentoRepository.findById(id).orElse(null);
+		
+		agendamento.setAnimal(objAgendamento.getAnimal());
+		agendamento.setTutor(objAgendamento.getTutor());
+		agendamento.setVeterinario(objAgendamento.getVeterinario());
+		agendamento.setEspecialidade(objAgendamento.getEspecialidade());
+		agendamento.setDuracao(objAgendamento.getDuracao());
+		
+		agendamentoRepository.save(agendamento);
+		
+		model.addAttribute("agendamento", agendamento);
+		
+		return "redirect:/";
 	}
 	
 	@GetMapping("/create")

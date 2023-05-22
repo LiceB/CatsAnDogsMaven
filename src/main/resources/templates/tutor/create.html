@@ -7,13 +7,14 @@
 	<nav th:replace="~{menuFragment :: nav()}"></nav>
 	<div class="container mt-5">
 		<h2 class="text-center">Cadastrar Tutor</h2>
-		<form method="post" class="mt-12" th:object="${tutor}" id='frmTutor'
+		<form method="get" class="mt-12" th:object="${tutor}" id='frmTutor'
 			action="/tutor/create">
 			<div class="row">
 				<div class="col-md-6">
 					<div class="input-group mb-3 input-group-sm">
 						<span class="input-group-text">Nome</span> <input type="text"
-							class="form-control" name="nome" id="nome" placeholder="Guilherme" />
+							class="form-control" name="nome" id="nome"
+							placeholder="Guilherme" />
 					</div>
 				</div>
 				<div class="col-md-6">
@@ -34,50 +35,59 @@
 				</div>
 				<div class="col-md-6">
 					<div class="input-group mb-3 input-group-sm">
+						<span class="input-group-text">CEP</span> <input type="text"
+							class="form-control" name="cep" id="cep" placeholder="99999-999"
+							size="10" maxlength="9" onblur="pesquisacep(this.value);" />
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="input-group mb-3 input-group-sm">
 						<span class="input-group-text">Rua</span> <input type="text"
 							class="form-control" name="logradouro" id="logradouro"
 							placeholder="Rua abc" />
 					</div>
 				</div>
-			</div>
-			<div class="row">
 				<div class="col-md-6">
 					<div class="input-group mb-3 input-group-sm">
 						<span class="input-group-text">Número</span> <input type="number"
 							class="form-control" name="numero" id="numero" placeholder="09" />
 					</div>
 				</div>
-				<div class="col-md-6">
-					<div class="input-group mb-3 input-group-sm">
-						<span class="input-group-text">Complemento</span> <input type="text"
-							class="form-control" name="complemento" id="complemento"
-							placeholder="bloco 1 apto 6" />
-					</div>
-				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-6">
 					<div class="input-group mb-3 input-group-sm">
-						<span class="input-group-text">Bairro</span> <input type="text"
-							class="form-control" name="bairro" id="bairro" placeholder="Engenheiro Goulart" />
+						<span class="input-group-text">Complemento</span> <input
+							type="text" class="form-control" name="complemento"
+							id="complemento" placeholder="bloco 1 apto 6" />
 					</div>
 				</div>
+				<div class="col-md-6">
+					<div class="input-group mb-3 input-group-sm">
+						<span class="input-group-text">Bairro</span> <input type="text"
+							class="form-control" name="bairro" id="bairro"
+							placeholder="Engenheiro Goulart" />
+					</div>
+				</div>
+			</div>
+			<div class="row">
 				<div class="col-md-6">
 					<div class="input-group mb-3 input-group-sm">
 						<span class="input-group-text">Cidade</span> <input type="text"
 							class="form-control" name="cidade" id="cidade"
-							placeholder="São Paulo"/>
+							placeholder="São Paulo" />
 					</div>
 				</div>
-			</div>
-			<div class="row">
 				<div class="col-md-6">
 					<div class="input-group mb-3 input-group-sm">
 						<span class="input-group-text">Estado</span> <input type="text"
-							class="form-control" name="estado" id="estado" placeholder="São Paulo" />
+							class="form-control" name="estado" id="estado"
+							placeholder="São Paulo" />
 					</div>
 				</div>
-				
+
 			</div>
 			<input class="btn btn-success" type="button" value="Salvar Tutor"
 				onclick="salvar();" />
@@ -86,12 +96,93 @@
 
 </body>
 <script>
+
+	function validar() {
+		const patternCEP = /^[0-9]{5}-[0-9]{3}$/;
+		const CEPTutor = document.getElementById("cep")
+		
+		if(!patternCEP.test(CEPTutor.value)) {
+			alert("Favor preencher o CEP corretamente")
+			CEPTutor.focus()
+			return true
+		}
+		
+		return false
+	}
+
+function limpa_formulário_cep() {
+    //Limpa valores do formulário de cep.
+    document.getElementById('logradouro').value=("");
+    document.getElementById('complemento').value=("");
+    document.getElementById('bairro').value=("");
+    document.getElementById('cidade').value=("");
+    document.getElementById('estado').value=("");
+}
+
+function meu_callback(conteudo) {
+if (!("erro" in conteudo)) {
+    //Atualiza os campos com os valores.
+    document.getElementById('logradouro').value=(conteudo.logradouro);
+    document.getElementById('complemento').value=(conteudo.complemento);
+    document.getElementById('bairro').value=(conteudo.bairro);
+    document.getElementById('cidade').value=(conteudo.localidade);
+    document.getElementById('estado').value=(conteudo.uf);
+} //end if.
+else {
+    //CEP não Encontrado.
+    limpa_formulário_cep();
+    alert("CEP não encontrado.");
+}
+}
+
+function pesquisacep(valor) {
+
+//Nova variável "cep" somente com dígitos.
+var cep = valor.replace(/\D/g, '');
+
+//Verifica se campo cep possui valor informado.
+if (cep != "") {
+
+    //Expressão regular para validar o CEP.
+    var validacep = /^[0-9]{8}$/;
+
+    //Valida o formato do CEP.
+    if(validacep.test(cep)) {
+
+        //Preenche os campos com "..." enquanto consulta webservice.
+        document.getElementById('logradouro').value="...";
+        document.getElementById('complemento').value="...";
+        document.getElementById('bairro').value="...";
+        document.getElementById('cidade').value="...";
+        document.getElementById('estado').value="...";
+
+        //Cria um elemento javascript.
+        var script = document.createElement('script');
+
+        //Sincroniza com o callback.
+        script.src = 'https://viacep.com.br/ws/'+ cep + '/json/?callback=meu_callback';
+
+        //Insere script no documento e carrega o conteúdo.
+        document.body.appendChild(script);
+
+    } //end if.
+    else {
+        //cep é inválido.
+        limpa_formulário_cep();
+        alert("Formato de CEP inválido.");
+    }
+} //end if.
+else {
+    //cep sem valor, limpa formulário.
+    limpa_formulário_cep();
+}
+};
 	
 	let responseEntity;
 	
 	function salvar() {
-		/*if (validar())
-			return;*/
+		if (validar())
+			return;
 
 		const form = document.getElementById('frmTutor');
 		const formData = new FormData(form); // create FormData object

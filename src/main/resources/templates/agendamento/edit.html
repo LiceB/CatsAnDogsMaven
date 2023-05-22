@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{headFragment :: head('Criar agendamento')}"><meta charset="UTF-8"></head>
+<body>
+	<nav th:replace="~{menuFragment :: nav()}"></nav>
+	<ul id="erros">
+	
+	</ul>
+	<div class="container mt-5">
+		<h2 class="text-center">Cadastrar Agendamento</h2>
+		<form method="put" class="mt-12" th:object="${agendamento}" id='frmAgendamento'
+			action="/agendamento/edit/{id}">
+			<input type="hidden" name="id" th:value="${agendamento.id}" />
+			<div class="row">
+				<div class="col-md-6">
+					<div class="input-group mb-3 input-group-sm">
+						<span class="input-group-text">Animal</span> <input type="text"
+							class="form-control" th:value="${agendamento.animal}" name="animal" id="animal" placeholder="Hercules" />
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="input-group mb-3 input-group-sm">
+						<span class="input-group-text">Tutor</span> <input type="text"
+							class="form-control" th:value="${agendamento.tutor}" name="tutor" id="tutor" placeholder="Guilherme" />
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="input-group mb-3 input-group-sm">
+						<span class="input-group-text">Veterinario</span> <input type="text"
+							class="form-control" th:value="${agendamento.veterinario}" name="veterinario" id="veterinario" placeholder="Dra Ana" />
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="input-group mb-3 input-group-sm">
+						<span class="input-group-text">Especialidade</span> <input type="text"
+							class="form-control" th:value="${agendamento.especialidade}" name="especialidade" id="especialidade" placeholder="Cardiologia" />
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="input-group mb-3 input-group-sm">
+						<span class="input-group-text">Duração</span> <input type="text"
+							class="form-control" th:value="${agendamento.duracao}" name="duracao" id="duracao" placeholder="45 minutos" />
+					</div>
+				</div>
+			</div>
+			<input class="btn btn-success" type="button"
+				value="Salvar Agendamento" onclick="salvar();" />
+		</form>
+	</div>
+
+</body>
+<script>
+	
+	let responseEntity;
+	
+	function salvar() {
+
+		const form = document.getElementById('frmAgendamento');
+		const formData = new FormData(form); // create FormData object
+		const jsonBody = JSON.stringify(Object.fromEntries(formData.entries()));
+		var myHeaders = new Headers();
+		myHeaders.append("Content-Type", "application/json");
+
+		var requestOptions = {
+			method: 'POST',
+			headers: myHeaders,
+			body: jsonBody,
+			redirect: 'follow'
+		};
+
+		fetch("/agendamento/create", requestOptions)
+			.then(response => {
+				responseEntity = response
+				return response.json()
+			})
+			.then(result => tratarRedirect(result, responseEntity))
+			.catch(error => console.log('error', error));
+	}
+	
+	async function tratarRedirect(data, response) {
+		if (response.ok) {
+			alert('Editado com sucesso')
+				
+			await new Promise(r => setTimeout(r, 2000));
+			window.location.href = "/agendamento";
+			return;
+		}
+		let erros = document.getElementById('erros');
+		erros.innerHTML = '';
+		let itemList = '';
+
+		/*if (data.hasOwnProperty('nome'))
+			itemList = `<li class="text-danger">${data.nome}</li>`;
+
+		if (data.hasOwnProperty('idAnimal'))
+			itemList += `<li class="text-danger">${data.idAnimal}</li>`;*/
+
+		erros.innerHTML = itemList;
+	}
+</script>
+</html>

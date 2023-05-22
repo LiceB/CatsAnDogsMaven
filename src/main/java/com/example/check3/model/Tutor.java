@@ -6,6 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 
 @Entity
 public class Tutor {
@@ -26,16 +27,14 @@ public class Tutor {
 	@NotBlank
 	private String celular;
 
+	@Pattern(regexp = "[0-9]{5}-[0-9]{3}", message = "CEP fora do padrão 99999-999")
+	private String cep;
+
 	@NotNull
 	@NotBlank
 	private String logradouro;
 
-	@NotNull
-	@NotBlank
 	private String numero;
-
-	@NotNull
-	@NotBlank
 	private String complemento;
 
 	@NotNull
@@ -80,6 +79,14 @@ public class Tutor {
 
 	public void setCelular(String celular) {
 		this.celular = celular;
+	}
+
+	public String getCep() {
+		return cep;
+	}
+
+	public void setCep(String cep) {
+		this.cep = cep;
 	}
 
 	public String getLogradouro() {
@@ -129,7 +136,5 @@ public class Tutor {
 	public void setEstado(String estado) {
 		this.estado = estado;
 	}
-	
-	
 
 }

@@ -5,20 +5,20 @@
 	<nav th:replace="~{menuFragment :: nav()}"></nav>
 	<div class="container mt-5">
 		<h2 class="text-center">Editar Animal</h2>
-		<form method="post" class="mt-12" th:object="${animal}" id='frmAnimal'
+		<form method="put" class="mt-12" th:object="${animal}" id='frmAnimal'
 			action="/animal/edit/{id}">
 			<input type="hidden" name="id" th:value="${animal.id}" />
 			<div class="row">
 				<div class="col-md-6">
 					<div class="input-group mb-3 input-group-sm">
 						<span class="input-group-text">Nome</span> <input type="text"
-							class="form-control" th:value="${veterinario.nome}" name="nome" id="nome" placeholder="Totó" />
+							class="form-control" th:value="${animal.nome}" name="nome" id="nome" placeholder="Totó" />
 					</div>
 				</div>
 				<div class="col-md-6">
 					<div class="input-group mb-3 input-group-sm">
 						<span class="input-group-text">Raça</span> <input type="text"
-							class="form-control" th:value="${veterinario.raca}" name="raca" id="raca" placeholder="Bulldog" />
+							class="form-control" th:value="${animal.raca}" name="raca" id="raca" placeholder="Bulldog" />
 					</div>
 				</div>
 			</div>
@@ -26,13 +26,13 @@
 				<div class="col-md-6">
 					<div class="input-group mb-3 input-group-sm">
 						<span class="input-group-text">Especie</span> <input type="text"
-							class="form-control" th:value="${veterinario.especie}" name="especie" id="especie" placeholder="Cachorro" />
+							class="form-control" th:value="${animal.especie}" name="especie" id="especie" placeholder="Cachorro" />
 					</div>
 				</div>
 				<div class="col-md-6">
 					<div class="input-group mb-3 input-group-sm">
 						<span class="input-group-text">Idade</span> <input type="number"
-							class="form-control" th:value="${veterinario.idade}" name="idade" id="idade" placeholder="7" />
+							class="form-control" th:value="${animal.idade}" name="idade" id="idade" placeholder="7" />
 					</div>
 				</div>
 			</div>

@@ -51,19 +51,6 @@ public class VeterinarioController {
 		}
 	}
 	
-	@PutMapping("/edit/{id}")
-	public ResponseEntity<Veterinario> edit(@Valid @RequestBody Veterinario objVeterinario) {
-		objVeterinario.setNome(objVeterinario.getNome());
-		objVeterinario.setCRV(objVeterinario.getCRV());
-		objVeterinario.setDisponibilidade(objVeterinario.getDisponibilidade());
-		objVeterinario.setEspecialidade(objVeterinario.getEspecialidade());
-		objVeterinario.setDuracao(objVeterinario.getDuracao());
-		
-		veterinarioRepository.save(objVeterinario);
-
-		return new ResponseEntity<Veterinario>(objVeterinario, HttpStatus.OK);
-	}
-	
 	@PostMapping("/edit/{id}")
 	public String create(@PathVariable("id") Long id, @ModelAttribute("veterinario") Veterinario objVeterinario, Model model) {
 		Veterinario veterinario = veterinarioRepository.findById(id).orElse(null);
