@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -65,23 +66,6 @@ public class AgendamentoController {
 		}
 	}
 	
-//	@PostMapping("/edit/{id}")
-//	public String edit(@PathVariable("id") Long id, @ModelAttribute("agendamento") Agendamento objAgendamento, Model model) {
-//		Agendamento agendamento = agendamentoRepository.findById(id).orElse(null);
-//		
-//		agendamento.setAnimal(objAgendamento.getAnimal());
-//		agendamento.setTutor(objAgendamento.getTutor());
-//		agendamento.setVeterinario(objAgendamento.getVeterinario());
-//		agendamento.setEspecialidade(objAgendamento.getEspecialidade());
-//		agendamento.setDuracao(objAgendamento.getDuracao());
-//		
-//		agendamentoRepository.save(agendamento);
-//		
-//		model.addAttribute("agendamento", agendamento);
-//		
-//		return "redirect:/";
-//	}
-	
 	@GetMapping("/create")
 	public ModelAndView create() {
 		ModelAndView model = new ModelAndView("agendamento/create");
@@ -95,6 +79,7 @@ public class AgendamentoController {
 		return model;
 	}
 	
+	@PostMapping("/create-form")
 	public ResponseEntity<Agendamento> createFrom(@Valid @RequestBody Agendamento objAgendamento) {
 		agendamentoRepository.save(objAgendamento);
 		return new ResponseEntity<Agendamento>(objAgendamento, HttpStatus.CREATED);
